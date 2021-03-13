@@ -3,17 +3,21 @@ import AddBookForm from './AddBookForm'
 import { addBookHandler } from '../../../store/actions/books'
 import { connect } from 'react-redux'
 import { fetchAuthorsHandler } from '../../../store/actions/authors'
+import { useHistory } from 'react-router'
 
-const AddBookContainer = ({addBookHandlerCreator, fetchAuthors, authors, addInProgress}) => {
+const AddBookContainer = ({ addBook, fetchAuthors, authors, addInProgress }) => {
   useEffect(() => {
     fetchAuthors()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const history = useHistory()
+
   const onSubmit = formData => {
-    addBookHandlerCreator(formData)
+    addBook(formData)
   }
 
-  return <AddBookForm onSubmit={onSubmit} authors={authors} addInProgress={addInProgress} />
+  return <AddBookForm onSubmit={onSubmit} authors={authors} addInProgress={addInProgress} history={history} />
 }
 
 const mapStateToProps = state => ({
@@ -22,7 +26,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addBookHandlerCreator: book => dispatch(addBookHandler(book)),
+  addBook: book => dispatch(addBookHandler(book)),
   fetchAuthors: () => dispatch(fetchAuthorsHandler())
 })
 

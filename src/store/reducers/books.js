@@ -4,6 +4,7 @@ import {
   REMOVE_BOOK_SUCCESS,
   FETCH_BOOK_SUCCESS,
   ADD_BOOK_IN_PROGRESS,
+  ADD_BOOK_SUCCESS,
   UPDATE_BOOK_IN_PROGRESS,
   UPDATE_BOOK_SUCCESS,
   REMOVE_IN_PROGRESS
@@ -12,7 +13,7 @@ import {
 const initialState = {
   books: [],
   loading: false,
-  book: null,
+  book: {},
   addInProgress: false,
   updateInProgress: false,
   removeInProgress: []
@@ -33,8 +34,10 @@ export default function booksReducer(state = initialState, action) {
         ...state, loading: false, book: action.book
       }
     case ADD_BOOK_IN_PROGRESS: {
-        return {...state, addInProgress: true}
-      }
+      return { ...state, addInProgress: true }
+    }
+    case ADD_BOOK_SUCCESS:
+      return { ...state, addInProgress: false }
     case UPDATE_BOOK_IN_PROGRESS:
       return {
         ...state, updateInProgress: true
@@ -45,7 +48,7 @@ export default function booksReducer(state = initialState, action) {
         updateInProgress: false,
         books: state.books.map(book => {
           if (book.key === action.data.key) {
-            return {...book, title: action.data.title}
+            return { ...book, title: action.data.title }
           }
           return book
         }),

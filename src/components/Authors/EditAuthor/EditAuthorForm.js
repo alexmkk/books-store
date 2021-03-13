@@ -1,12 +1,13 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
-const AddAuthorForm = ({ handleSubmit, addInProgress, history }) => {
+const EditAuthorForm = ({ handleSubmit, author, updateInProgress, history }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Новый автор</h1>
+      <h1>Редактировать автора <strong>{author.last_name} {author.first_name}</strong></h1>
       <div className="mb-3">
-        <label htmlFor="last_name" className="form-label">Фамилия</label>
+        <label htmlFor="title" className="form-label">Фамилия</label>
         <Field
           component="input"
           type="text"
@@ -27,14 +28,27 @@ const AddAuthorForm = ({ handleSubmit, addInProgress, history }) => {
           required
         />
       </div>
+      <Field
+        component="input"
+        type="hidden"
+        className="form-control"
+        id="key"
+        name="key"
+      />
       <button
         type="submit"
         className="btn btn-primary"
-        disabled={addInProgress}
-      >Добавить</button>
+        disabled={updateInProgress}
+      >Сохранить</button>
       <button className='btn btn-secondary ml-3' onClick={() => history.push('/authors')}>Назад</button>
     </form>
   )
 }
 
-export default reduxForm({ form: 'addAuthor' })(AddAuthorForm)
+export default connect(state => ({
+  initialValues: {
+    first_name: state.author.author.first_name,
+    last_name: state.author.author.last_name,
+    key: state.author.author.key
+  }
+}))(reduxForm({ form: 'editAuthor' })(EditAuthorForm))

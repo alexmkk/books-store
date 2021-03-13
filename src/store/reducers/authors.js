@@ -3,6 +3,7 @@ import {
   FETCH_AUTHORS_IN_PROGRESS,
   FETCH_AUTHORS_SUCCESS,
   ADD_AUTHOR_IN_PROGRESS,
+  ADD_AUTHOR_SUCCESS,
   UPDATE_AUTHOR_IN_PROGRESS,
   UPDATE_AUTHOR_SUCCESS,
   REMOVE_IN_PROGRESS_AUTHORS,
@@ -12,7 +13,7 @@ import {
 const initialState = {
   authors: [],
   loading: false,
-  author: null,
+  author: {},
   addInProgress: false,
   updateInProgress: false,
   removeInProgress: []
@@ -22,7 +23,7 @@ export default function authorsReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_AUTHORS_IN_PROGRESS:
       return {
-        ...state, loading: true
+        ...state, author: [], loading: true
       }
     case FETCH_AUTHORS_SUCCESS:
       return {
@@ -33,8 +34,10 @@ export default function authorsReducer(state = initialState, action) {
         ...state, loading: false, author: action.author
       }
     case ADD_AUTHOR_IN_PROGRESS: {
-      return {...state, addInProgress: true}
+      return { ...state, addInProgress: true }
     }
+    case ADD_AUTHOR_SUCCESS:
+      return { ...state, addInProgress: false }
     case UPDATE_AUTHOR_IN_PROGRESS:
       return {
         ...state, updateInProgress: true

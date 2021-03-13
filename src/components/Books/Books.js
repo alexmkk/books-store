@@ -1,27 +1,38 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-const Books = ({books, authors, onDelete, removeInProgress}) => {
+const Books = ({ books, authors, onRemove, removeInProgress }) => {
   return (
     <>
       {
         books.map(book => {
-          const {title, year, key} = book
+          const { title, year, key } = book
+          let author = [],
+            last_name = '',
+            first_name = ''
+          if (authors.length > 0) {
+            author = authors.filter(author => author.key === book.author_id)
+            if (author.length > 0) {
+              last_name = author[0].last_name
+              first_name = author[0].first_name
+            }
+          }
+
           return (
             <tr key={key}>
               <td>{title}</td>
-              <td>Фамилия автора</td>
-              <td>Имя автора</td>
+              <td>{last_name}</td>
+              <td>{first_name}</td>
               <td>{year}</td>
               <td>
                 <NavLink to={`/books/${key}`}>Смотреть</NavLink>
               </td>
               <td>
-                <NavLink to={`/books/edit/${key}`}>Редактировать</NavLink>
+                <NavLink to={`/books/${key}/edit`}>Редактировать</NavLink>
               </td>
               <td>
                 <button
-                  onClick={() => onDelete(key)}
+                  onClick={() => onRemove(key)}
                   type="button"
                   className="btn btn-danger"
                   disabled={removeInProgress.indexOf(key) !== -1}
@@ -31,7 +42,7 @@ const Books = ({books, authors, onDelete, removeInProgress}) => {
           )
         })
       }
-    </> 
+    </>
   )
 }
 

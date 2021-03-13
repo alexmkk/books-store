@@ -4,40 +4,40 @@ import Loader from './../Loader/'
 import { connect } from 'react-redux'
 import { fetchBooksHandler, removeBookHandler } from './../../store/actions/books'
 import { NavLink } from 'react-router-dom'
-import { fetchAuthorsHandler } from './../../store/actions/authors'
 
-const BooksContainer = ({loading, books, fetchBooks, removeBook, removeInProgress, fetchAuthors, authors}) => {
+const BooksContainer = ({ loading, books, fetchBooks, removeBook, removeInProgress, authors }) => {
   useEffect(() => {
-    fetchAuthors()
     fetchBooks()
-  }, [fetchAuthors, fetchBooks])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const onDelete = key => {
+  const onRemove = key => {
     removeBook(key)
   }
-
   return (
     <>
       <h1>Книги</h1>
-      <table className="table table-sm">
-        <tbody>
-          <tr>
-            <th>Название</th>
-            <th>Фамилия автора</th>
-            <th>Имя автора</th>
-            <th>Первая публикация</th>
-            <th colSpan='3'></th>
-          </tr>
-          {loading 
-            ? <tr><td colSpan='7'><Loader /></td></tr>
-            : books 
-              ? <Books books={books} onDelete={onDelete} removeInProgress={removeInProgress} authors={authors} />
-              : <tr><td colSpan='7'><p>Книги не найдены</p></td></tr>
-          }
-        </tbody>
-      </table>
+      {loading
+        ? <Loader />
+        : books.length > 0
+          ? <table className="table table-sm">
+            <tbody>
+              <tr>
+                <th>Название</th>
+                <th>Фамилия автора</th>
+                <th>Имя автора</th>
+                <th>Первая публикация</th>
+                <th colSpan='3'></th>
+              </tr>
+              <Books books={books} onRemove={onRemove} removeInProgress={removeInProgress} authors={authors} />
+            </tbody>
+          </table>
+          : <p>Книги не найдены</p>
+
+      }
+
       <NavLink to="/books/add" exact className="nav-link">
-        <button  
+        <button
           type="button"
           className="btn btn-success"
         >Добавить книгу</button>
@@ -52,10 +52,9 @@ const mapStateToProps = state => ({
   loading: state.book.loading,
   removeInProgress: state.book.removeInProgress
 })
-  
-const mapDispatchToProps = dispatch =>  ({
+
+const mapDispatchToProps = dispatch => ({
   fetchBooks: () => dispatch(fetchBooksHandler()),
-  fetchAuthors: () => dispatch(fetchAuthorsHandler()),
   removeBook: key => dispatch(removeBookHandler(key))
 })
 

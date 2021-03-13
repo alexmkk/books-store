@@ -2,38 +2,39 @@ import React, { useEffect } from 'react'
 import Authors from './Authors'
 import Loader from './../Loader/'
 import { fetchAuthorsHandler, removeAuthorHandler } from '../../store/actions/authors'
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
-const AuthorsContainer = ({authors, loading, fetchAuthors, removeAuthor, removeInProgress}) => {
+const AuthorsContainer = ({ authors, loading, fetchAuthors, removeAuthor, removeInProgress }) => {
   useEffect(() => {
     fetchAuthors()
-  }, [fetchAuthors])
-  
-  const onDelete = key => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const onRemove = key => {
     removeAuthor(key)
   }
 
   return (
     <>
       <h1>Авторы</h1>
-      <table className="table table-sm">
-        <tbody>
-          <tr>
-            <th>Фамилия</th>
-            <th colSpan='4'>Имя</th>
-          </tr>
-          {loading 
-            ? <tr><td colSpan='5'><Loader /></td></tr>
-            : authors
-              ? <Authors authors={authors} onDelete={onDelete} removeInProgress={removeInProgress} />
-              : <tr><td colSpan='5'><p>Авторы не найдены</p></td></tr>
-              
-          }
-        </tbody>
-      </table>
+      {loading
+        ? <Loader />
+        : authors.length > 0
+          ? <table className="table table-sm">
+            <tbody>
+              <tr>
+                <th>Фамилия</th>
+                <th colSpan='4'>Имя</th>
+              </tr>
+              <Authors authors={authors} onRemove={onRemove} removeInProgress={removeInProgress} />
+            </tbody>
+          </table>
+          : <p>Авторы не найдены</p>
+      }
+
       <NavLink to="/authors/add" exact className="nav-link">
-        <button  
+        <button
           type="button"
           className="btn btn-success"
         >Добавить автора</button>
