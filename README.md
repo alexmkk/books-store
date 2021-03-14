@@ -1,4 +1,7 @@
 # Getting Started with Create React App
+Приложение представляет собой виртуальную библиотеку. Есть два типа данных - Автор и Книга. Каждая Книга должна быть привязана к конкретному Автору (только одному). В приложении должна быть возможность создания, просмотра, изменения, удаления Книг и Авторов.
+
+# Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
