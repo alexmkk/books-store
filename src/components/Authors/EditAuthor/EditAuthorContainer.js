@@ -6,13 +6,13 @@ import EditAuthorForm from './EditAuthorForm';
 import Loader from '../../Loader';
 
 const EditAuthorContainer = ({ author, fetchAuthorByKey, loading, updateAuthor, updateInProgress }) => {
-  let { key } = useParams()
+  const { key } = useParams(),
+        history = useHistory()
+
   useEffect(() => {
     fetchAuthorByKey(key)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const history = useHistory()
 
   const onSubmit = formData => {
     updateAuthor(formData)

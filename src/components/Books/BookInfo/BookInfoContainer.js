@@ -6,13 +6,12 @@ import Loader from '../../Loader'
 import BookInfo from './BookInfo'
 
 const BookInfoContainer = ({ book, author, loading, fetchBookByKey }) => {
-  let { key } = useParams()
+  const { key } = useParams(),
+        history = useHistory()
   useEffect(() => {
     fetchBookByKey(key)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const history = useHistory()
 
   return (
     <>

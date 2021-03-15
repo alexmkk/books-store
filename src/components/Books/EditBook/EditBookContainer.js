@@ -7,14 +7,14 @@ import Loader from '../../Loader'
 import { fetchAuthorsHandler } from '../../../store/actions/authors'
 
 const EditBookContainer = ({ book, fetchBookByKey, loading, updateBook, updateInProgress, fetchAuthors, authors }) => {
-  let { key } = useParams()
+  const { key } = useParams(),
+        history = useHistory()
+        
   useEffect(() => {
     fetchBookByKey(key)
     fetchAuthors()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const history = useHistory()
 
   const onSubmit = formData => {
     updateBook(formData)

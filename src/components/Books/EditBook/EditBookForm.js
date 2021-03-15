@@ -21,7 +21,7 @@ const EditBookForm = ({ handleSubmit, book, updateInProgress, history, authors }
         <label htmlFor="title" className="form-label">Первая публикация</label>
         <Field
           component="input"
-          type="text"
+          type="number"
           className="form-control"
           id="year"
           name="year"

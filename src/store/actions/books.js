@@ -6,8 +6,9 @@ import {
   UPDATE_BOOK_IN_PROGRESS, UPDATE_BOOK_SUCCESS
 }
   from './actionTypes'
-import axios from './../../axios/axios'
+
 import { fetchAuthorByKeyHandler, fetchAuthorsHandler } from './authors'
+import { booksAPI } from './../../api/api'
 
 export const fetchBooksStart = () => ({ type: FETCH_BOOKS_IN_PROGRESS })
 export const fetchBooksSuccess = books => ({ type: FETCH_BOOKS_SUCCESS, books })
@@ -24,13 +25,13 @@ export const fetchBooksHandler = () => {
     dispatch(fetchAuthorsHandler())
     dispatch(fetchBooksStart())
     try {
-      const response = await axios.get('/books.json')
+      const data = await booksAPI.getBooks()
       const books = []
 
-      if (response.data !== null) {
-        Object.keys(response.data).forEach(key => {
+      if (data !== null) {
+        Object.keys(data).forEach(key => {
           books.push({
-            ...response.data[key],
+            ...data[key],
             key
           })
         })
@@ -47,8 +48,7 @@ export const fetchBookByKeyHandler = key => {
     dispatch(fetchBooksStart())
 
     try {
-      const response = await axios.get(`/books/${key}.json`)
-      const book = response.data
+      const book = await booksAPI.getBook(key)
       if (book !== null) {
         book.key = key
         dispatch(fetchAuthorByKeyHandler(book.author_id))
@@ -68,7 +68,7 @@ export const addBookHandler = book => {
       createt_at: Date.now()
     }
     try {
-      await axios.post('/books.json', bookModify)
+      await booksAPI.addBook(bookModify)
       dispatch(addBookSucess())
       window.history.go(-1)
     } catch (e) {
@@ -82,7 +82,7 @@ export const updateBookHandler = data => {
   return async dispatch => {
     dispatch(updateInProgress())
     try {
-      await axios.patch(`/books/${key}.json`, { title, year, author_id, image })
+      await booksAPI.updateBook(key, {title, year, author_id, image})
       dispatch(updateBookSucess(data))
       window.history.go(-1)
     } catch (e) {
@@ -95,7 +95,7 @@ export const removeBookHandler = key => {
   return async dispatch => {
     dispatch(removeInProgress(key))
     try {
-      await axios.delete(`/books/${key}.json`)
+      await booksAPI.removeBook(key)
       dispatch(removeBookSuccess(key))
     } catch (e) {
       console.log(e)
