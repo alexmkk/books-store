@@ -9,6 +9,7 @@ import {
   REMOVE_IN_PROGRESS_AUTHORS,
   REMOVE_AUTHOR_SUCCESS
 } from '../actions/actionTypes';
+import { AuthorsType } from '../actions/authors';
 
 export type Author = {
   key: string
@@ -27,7 +28,7 @@ const initialState = {
 
 export type initialStateType = typeof initialState
 
-export default function authorsReducer(state = initialState, action: any): initialStateType {
+export default function authorsReducer(state = initialState, action: AuthorsType): initialStateType {
   switch (action.type) {
     case FETCH_AUTHORS_IN_PROGRESS:
       return {

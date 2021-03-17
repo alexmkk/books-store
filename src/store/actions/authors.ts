@@ -7,24 +7,49 @@ import {
 } from './actionTypes'
 import { authorsAPI } from '../../api/api'
 import { Author } from '../reducers/authors'
+import { AppStateType } from '../reducers/rootReducer'
+import { ThunkAction } from 'redux-thunk'
 
+type FetchAuthorsStartType = {type: typeof FETCH_AUTHORS_IN_PROGRESS}
+type FetchAuthorsSuccessType = {
+  type: typeof FETCH_AUTHORS_SUCCESS
+  authors: Array<Author>
+}
+type FetchAuthorSuccessType = {
+  type: typeof FETCH_AUTHOR_SUCCESS
+  author: Author
+}
+type UpdateInProgressType = {type: typeof UPDATE_AUTHOR_IN_PROGRESS}
 type UpdateAuthorSucessType = {
   type: typeof UPDATE_AUTHOR_SUCCESS
   data: Author
 }
+type AddAuthorInProgressType = {type: typeof ADD_AUTHOR_IN_PROGRESS}
+type AddAuthorSuccessType = {type: typeof ADD_AUTHOR_SUCCESS}
+type RemoveAuthorSuccessType = {
+  type: typeof REMOVE_AUTHOR_SUCCESS
+  key: string
+}
+type RemoveInProgressType = {
+  type: typeof REMOVE_IN_PROGRESS_AUTHORS
+  key: string
+}
 
-export const fetchAuthorsStart = () => ({ type: FETCH_AUTHORS_IN_PROGRESS })
-export const fetchAuthorsSuccess = (authors: Array<Author>) => ({ type: FETCH_AUTHORS_SUCCESS, authors })
-export const fetchAuthorSuccess = (author: Author) => ({ type: FETCH_AUTHOR_SUCCESS, author })
-export const updateInProgress = () => ({ type: UPDATE_AUTHOR_IN_PROGRESS })
+export type AuthorsType = FetchAuthorsStartType | FetchAuthorsSuccessType | FetchAuthorSuccessType | UpdateInProgressType | 
+          UpdateAuthorSucessType | AddAuthorInProgressType | AddAuthorSuccessType | RemoveAuthorSuccessType | RemoveInProgressType
+
+export const fetchAuthorsStart = (): FetchAuthorsStartType => ({ type: FETCH_AUTHORS_IN_PROGRESS })
+export const fetchAuthorsSuccess = (authors: Array<Author>): FetchAuthorsSuccessType => ({ type: FETCH_AUTHORS_SUCCESS, authors })
+export const fetchAuthorSuccess = (author: Author): FetchAuthorSuccessType => ({ type: FETCH_AUTHOR_SUCCESS, author })
+export const updateInProgress = (): UpdateInProgressType => ({ type: UPDATE_AUTHOR_IN_PROGRESS })
 export const updateAuthorSucess = (data: Author): UpdateAuthorSucessType => ({ type: UPDATE_AUTHOR_SUCCESS, data })
-export const addAuthorInProgress = () => ({ type: ADD_AUTHOR_IN_PROGRESS })
-export const addAuthorSuccess = () => ({ type: ADD_AUTHOR_SUCCESS })
-export const removeAuthorSuccess = (key: string) => ({ type: REMOVE_AUTHOR_SUCCESS, key })
-export const removeInProgress = (key: string) => ({ type: REMOVE_IN_PROGRESS_AUTHORS, key })
+export const addAuthorInProgress = (): AddAuthorInProgressType => ({ type: ADD_AUTHOR_IN_PROGRESS })
+export const addAuthorSuccess = (): AddAuthorSuccessType => ({ type: ADD_AUTHOR_SUCCESS })
+export const removeAuthorSuccess = (key: string): RemoveAuthorSuccessType => ({ type: REMOVE_AUTHOR_SUCCESS, key })
+export const removeInProgress = (key: string): RemoveInProgressType => ({ type: REMOVE_IN_PROGRESS_AUTHORS, key })
 
-export const fetchAuthorsHandler = () => {
-  return async (dispatch: any) => {
+export const fetchAuthorsHandler = (): ThunkAction<Promise<void>, AppStateType, unknown, AuthorsType> => {
+  return async (dispatch) => {
     dispatch(fetchAuthorsStart())
     try {
       const data = await authorsAPI.getAuthors()
@@ -51,10 +76,10 @@ export const fetchAuthorsHandler = () => {
   }
 }
 
-export const fetchAuthorByKeyHandler = (key: string) => {
-  return async (dispatch: any) => {
+export const fetchAuthorByKeyHandler = (key: string): ThunkAction<Promise<void>, AppStateType, unknown, AuthorsType> => {
+  return async (dispatch) => {
     dispatch(fetchAuthorsStart())
-
+    
     try {
       const author = await authorsAPI.getAuthor(key)
       
@@ -69,8 +94,8 @@ export const fetchAuthorByKeyHandler = (key: string) => {
   }
 }
 
-export const addAuthorHandler = (author: Author) => {
-  return async (dispatch: any) => {
+export const addAuthorHandler = (author: Author): ThunkAction<Promise<void>, AppStateType, unknown, AuthorsType> => {
+  return async (dispatch) => {
     dispatch(addAuthorInProgress())
     try {
       await authorsAPI.addAuthor(author)
@@ -82,9 +107,9 @@ export const addAuthorHandler = (author: Author) => {
   }
 }
 
-export const updateAuthorHandler = (data: Author) => {
+export const updateAuthorHandler = (data: Author): ThunkAction<Promise<void>, AppStateType, unknown, AuthorsType> => {
   const { key, first_name, last_name } = data
-  return async (dispatch: any) => {
+  return async (dispatch) => {
     dispatch(updateInProgress())
     try {
       await authorsAPI.updateAuthor(key, { first_name, last_name })
@@ -96,8 +121,8 @@ export const updateAuthorHandler = (data: Author) => {
   }
 }
 
-export const removeAuthorHandler = (key: string) => {
-  return async (dispatch: any) => {
+export const removeAuthorHandler = (key: string): ThunkAction<Promise<void>, AppStateType, unknown, AuthorsType> => {
+  return async (dispatch) => {
     dispatch(removeInProgress(key))
     try {
       await authorsAPI.removeAuthor(key)
