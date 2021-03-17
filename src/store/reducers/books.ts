@@ -10,16 +10,27 @@ import {
   REMOVE_IN_PROGRESS
 } from '../actions/actionTypes'
 
-const initialState = {
-  books: [],
-  loading: false,
-  book: {},
-  addInProgress: false,
-  updateInProgress: false,
-  removeInProgress: []
+export type Book = {
+  key: string,
+  author_id: string,
+  createt_at: number,
+  image: string | '',
+  title: string,
+  year: number
 }
 
-export default function booksReducer(state = initialState, action) {
+const initialState = {
+  books: [] as Array<Book>,
+  loading: false,
+  book: {} as Book,
+  addInProgress: false,
+  updateInProgress: false,
+  removeInProgress: [] as Array<string>
+}
+
+export type InitialStateType = typeof initialState
+
+export default function booksReducer(state = initialState, action: any): InitialStateType {
   switch (action.type) {
     case FETCH_BOOKS_IN_PROGRESS:
       return {

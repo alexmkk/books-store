@@ -1,7 +1,13 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Author } from '../../../store/reducers/authors';
 
-const AddAuthorForm = ({ handleSubmit, addInProgress, history }) => {
+type ownPropsType = {
+  addInProgress: boolean
+  history: any
+}
+
+const AddAuthorForm: React.FC<InjectedFormProps<Author, ownPropsType> & ownPropsType> = ({ handleSubmit, addInProgress, history }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Новый автор</h1>
@@ -37,4 +43,4 @@ const AddAuthorForm = ({ handleSubmit, addInProgress, history }) => {
   )
 }
 
-export default reduxForm({ form: 'addAuthor' })(AddAuthorForm)
+export default reduxForm<Author, ownPropsType>({ form: 'addAuthor' })(AddAuthorForm)

@@ -1,6 +1,14 @@
 import React from 'react'
+import { Book } from '../../../store/reducers/books'
+import { Author } from '../../../store/reducers/authors'
 
-const BookInfo = ({ book, author, history }) => {
+type ownPropsType = {
+  book: Book
+  author: Author
+  history: any
+}
+
+const BookInfo: React.FC<ownPropsType> = ({ book, author, history }) => {
   let first_name = '', last_name = ''
   if (author && Object.keys(author).length !== 0) {
     first_name = author.first_name

@@ -8,25 +8,39 @@ import {
   from './actionTypes'
 
 import { fetchAuthorByKeyHandler, fetchAuthorsHandler } from './authors'
-import { booksAPI } from './../../api/api'
+import { booksAPI } from '../../api/api'
+import { Book } from '../reducers/books'
+
+type UpdateBookType = {
+  key: string
+  title: string
+  year: number
+  author_id: string
+  image: string | ''
+}
+
+type UpdateBookSucessType = {
+  type: typeof UPDATE_BOOK_SUCCESS
+  data: UpdateBookType
+}
 
 export const fetchBooksStart = () => ({ type: FETCH_BOOKS_IN_PROGRESS })
-export const fetchBooksSuccess = books => ({ type: FETCH_BOOKS_SUCCESS, books })
-export const fetchBookSuccess = book => ({ type: FETCH_BOOK_SUCCESS, book })
+export const fetchBooksSuccess = (books: Array<Book>) => ({ type: FETCH_BOOKS_SUCCESS, books })
+export const fetchBookSuccess = (book: Book) => ({ type: FETCH_BOOK_SUCCESS, book })
 export const updateInProgress = () => ({ type: UPDATE_BOOK_IN_PROGRESS })
-export const updateBookSucess = data => ({ type: UPDATE_BOOK_SUCCESS, data })
+export const updateBookSucess = (data: UpdateBookType): UpdateBookSucessType => ({ type: UPDATE_BOOK_SUCCESS, data })
 export const addBookInProgress = () => ({ type: ADD_BOOK_IN_PROGRESS })
 export const addBookSucess = () => ({ type: ADD_BOOK_SUCCESS })
-export const removeBookSuccess = key => ({ type: REMOVE_BOOK_SUCCESS, key })
-export const removeInProgress = key => ({ type: REMOVE_IN_PROGRESS, key })
+export const removeBookSuccess = (key: string) => ({ type: REMOVE_BOOK_SUCCESS, key })
+export const removeInProgress = (key: string) => ({ type: REMOVE_IN_PROGRESS, key })
 
 export const fetchBooksHandler = () => {
-  return async dispatch => {
+  return async (dispatch: any) => {
     dispatch(fetchAuthorsHandler())
     dispatch(fetchBooksStart())
     try {
       const data = await booksAPI.getBooks()
-      const books = []
+      const books: Array<Book> = []
 
       if (data !== null) {
         Object.keys(data).forEach(key => {
@@ -43,8 +57,8 @@ export const fetchBooksHandler = () => {
   }
 }
 
-export const fetchBookByKeyHandler = key => {
-  return async dispatch => {
+export const fetchBookByKeyHandler = (key: string) => {
+  return async (dispatch: any) => {
     dispatch(fetchBooksStart())
 
     try {
@@ -60,8 +74,8 @@ export const fetchBookByKeyHandler = key => {
   }
 }
 
-export const addBookHandler = book => {
-  return async dispatch => {
+export const addBookHandler = (book: Book) => {
+  return async (dispatch: any) => {
     dispatch(addBookInProgress())
     const bookModify = {
       ...book,
@@ -77,9 +91,9 @@ export const addBookHandler = book => {
   }
 }
 
-export const updateBookHandler = data => {
+export const updateBookHandler = (data: UpdateBookType) => {
   const { key, title, year, author_id, image } = data
-  return async dispatch => {
+  return async (dispatch: any) => {
     dispatch(updateInProgress())
     try {
       await booksAPI.updateBook(key, {title, year, author_id, image})
@@ -91,8 +105,8 @@ export const updateBookHandler = data => {
   }
 }
 
-export const removeBookHandler = key => {
-  return async dispatch => {
+export const removeBookHandler = (key: string) => {
+  return async (dispatch: any) => {
     dispatch(removeInProgress(key))
     try {
       await booksAPI.removeBook(key)

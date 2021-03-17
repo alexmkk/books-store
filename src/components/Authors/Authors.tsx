@@ -1,14 +1,21 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
+import { Author } from '../../store/reducers/authors';
 
-const Authors = ({ authors, onRemove, removeInProgress }) => {
+type PropsType = {
+  authors: Array<Author>
+  onRemove: (key: string) => any
+  removeInProgress: Array<string>
+}
+
+const Authors: React.FC<PropsType> = ({ authors, onRemove, removeInProgress }) => {
   return (
     <>
       {
-        authors.map(author => {
+        authors.map((author) => {
           const { last_name, first_name, key } = author
           return (
-            <tr key={key}>
+            <tr key={`${key}`}>
               <td>{last_name}</td>
               <td>{first_name}</td>
               <td>

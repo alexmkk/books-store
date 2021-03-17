@@ -1,8 +1,18 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
+import { Book } from '../../../store/reducers/books';
+import { Author } from '../../../store/reducers/authors';
+import { AppStateType } from '../../../store/reducers/rootReducer';
 
-const EditBookForm = ({ handleSubmit, book, updateInProgress, history, authors }) => {
+type ownPropsType = {
+  book: Book
+  updateInProgress: boolean
+  history: any
+  authors: Array<Author>
+}
+
+const EditBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsType> = ({ handleSubmit, book, updateInProgress, history, authors }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Редактировать книгу <strong>{book.title}</strong></h1>
@@ -70,7 +80,7 @@ const EditBookForm = ({ handleSubmit, book, updateInProgress, history, authors }
   )
 }
 
-export default connect(state => ({
+export default connect((state: AppStateType) => ({
   initialValues: {
     title: state.book.book.title,
     year: state.book.book.year,
@@ -78,4 +88,4 @@ export default connect(state => ({
     image: state.book.book.image,
     key: state.book.book.key
   }
-}))(reduxForm({ form: 'editBook' })(EditBookForm))
+}))(reduxForm<Book, ownPropsType>({ form: 'editBook' })(EditBookForm))

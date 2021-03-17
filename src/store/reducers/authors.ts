@@ -10,20 +10,28 @@ import {
   REMOVE_AUTHOR_SUCCESS
 } from '../actions/actionTypes';
 
-const initialState = {
-  authors: [],
-  loading: false,
-  author: {},
-  addInProgress: false,
-  updateInProgress: false,
-  removeInProgress: []
+export type Author = {
+  key: string
+  first_name: string
+  last_name: string
 }
 
-export default function authorsReducer(state = initialState, action) {
+const initialState = {
+  authors: [] as Array<Author>,
+  loading: false,
+  author: {} as Author,
+  addInProgress: false,
+  updateInProgress: false,
+  removeInProgress: [] as Array<string>
+}
+
+export type initialStateType = typeof initialState
+
+export default function authorsReducer(state = initialState, action: any): initialStateType {
   switch (action.type) {
     case FETCH_AUTHORS_IN_PROGRESS:
       return {
-        ...state, author: [], loading: true
+        ...state, author: {key: '', last_name: '', first_name: ''}, loading: true
       }
     case FETCH_AUTHORS_SUCCESS:
       return {

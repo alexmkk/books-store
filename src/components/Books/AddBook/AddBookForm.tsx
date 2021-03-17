@@ -1,7 +1,15 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, InjectedFormProps } from 'redux-form'
+import { Author } from '../../../store/reducers/authors'
+import { Book } from '../../../store/reducers/books'
 
-const AddBookForm = ({ handleSubmit, authors, addInProgress, history }) => {
+type ownPropsType = {
+  authors: Array<Author>
+  addInProgress: boolean
+  history: any
+}
+
+const AddBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsType> = ({ handleSubmit, authors, addInProgress, history }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Новая книга</h1>
@@ -60,4 +68,4 @@ const AddBookForm = ({ handleSubmit, authors, addInProgress, history }) => {
   )
 }
 
-export default reduxForm({ form: 'addBook' })(AddBookForm)
+export default reduxForm<Book, ownPropsType>({ form: 'addBook' })(AddBookForm)

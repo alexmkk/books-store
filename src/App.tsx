@@ -1,5 +1,6 @@
 
 import { Route, Switch } from 'react-router-dom'
+import React from 'react'
 import Navbar from './components/Navbar'
 import BooksContainer from './components/Books/BooksContainer'
 import BookInfoContainer from './components/Books/BookInfo/BookInfoContainer'
@@ -10,7 +11,7 @@ import EditBookContainer from './components/Books/EditBook/EditBookContainer'
 import AddAuthorContainer from './components/Authors/AddAuthor/AddAuthorContainer'
 import EditAuthorContainer from './components/Authors/EditAuthor/EditAuthorContainer'
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Navbar />
