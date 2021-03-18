@@ -1,7 +1,7 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom';
-import { Book } from '../../store/reducers/books';
-import { Author } from '../../store/reducers/authors';
+import { NavLink } from 'react-router-dom'
+import { Book } from '../../store/reducers/books'
+import { Author } from '../../store/reducers/authors'
 
 type ownPropsType = {
   books: Array<Book>

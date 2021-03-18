@@ -1,15 +1,8 @@
-import {
-  FETCH_BOOKS_IN_PROGRESS, FETCH_BOOKS_SUCCESS,
-  FETCH_BOOK_SUCCESS,
-  ADD_BOOK_IN_PROGRESS, ADD_BOOK_SUCCESS,
-  REMOVE_IN_PROGRESS, REMOVE_BOOK_SUCCESS,
-  UPDATE_BOOK_IN_PROGRESS, UPDATE_BOOK_SUCCESS
-}
-  from './actionTypes'
-
 import { fetchAuthorByKeyHandler, fetchAuthorsHandler } from './authors'
 import { booksAPI } from '../../api/api'
 import { Book } from '../reducers/books'
+import { ThunkAction } from 'redux-thunk'
+import { InferActionsTypes, AppStateType } from '../reducers/rootReducer'
 
 type UpdateBookType = {
   key: string
@@ -19,25 +12,25 @@ type UpdateBookType = {
   image: string | ''
 }
 
-type UpdateBookSucessType = {
-  type: typeof UPDATE_BOOK_SUCCESS
-  data: UpdateBookType
+export const actions = {
+  fetchBooksSuccess: (books: Array<Book>) => ({ type: 'FETCH_BOOKS_SUCCESS', books } as const),
+  fetchBooksStart: () => ({ type: 'FETCH_BOOKS_IN_PROGRESS' } as const),
+  fetchBookSuccess: (book: Book) => ({ type: 'FETCH_BOOK_SUCCESS', book } as const),
+  updateInProgress: () => ({ type: 'UPDATE_BOOK_IN_PROGRESS' } as const),
+  updateBookSucess: (data: UpdateBookType) => ({ type: 'UPDATE_BOOK_SUCCESS', data } as const),
+  addBookInProgress: () => ({ type: 'ADD_BOOK_IN_PROGRESS' } as const),
+  addBookSucess: () => ({ type: 'ADD_BOOK_SUCCESS' } as const),
+  removeBookSuccess: (key: string) => ({ type: 'REMOVE_BOOK_SUCCESS', key } as const),
+  removeInProgress: (key: string) => ({ type: 'REMOVE_IN_PROGRESS', key } as const)
 }
 
-export const fetchBooksStart = () => ({ type: FETCH_BOOKS_IN_PROGRESS })
-export const fetchBooksSuccess = (books: Array<Book>) => ({ type: FETCH_BOOKS_SUCCESS, books })
-export const fetchBookSuccess = (book: Book) => ({ type: FETCH_BOOK_SUCCESS, book })
-export const updateInProgress = () => ({ type: UPDATE_BOOK_IN_PROGRESS })
-export const updateBookSucess = (data: UpdateBookType): UpdateBookSucessType => ({ type: UPDATE_BOOK_SUCCESS, data })
-export const addBookInProgress = () => ({ type: ADD_BOOK_IN_PROGRESS })
-export const addBookSucess = () => ({ type: ADD_BOOK_SUCCESS })
-export const removeBookSuccess = (key: string) => ({ type: REMOVE_BOOK_SUCCESS, key })
-export const removeInProgress = (key: string) => ({ type: REMOVE_IN_PROGRESS, key })
+export type ActionTypes = InferActionsTypes<typeof actions>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
-export const fetchBooksHandler = () => {
+export const fetchBooksHandler = (): ThunkType => {
   return async (dispatch: any) => {
     dispatch(fetchAuthorsHandler())
-    dispatch(fetchBooksStart())
+    dispatch(actions.fetchBooksStart())
     try {
       const data = await booksAPI.getBooks()
       const books: Array<Book> = []
@@ -50,16 +43,16 @@ export const fetchBooksHandler = () => {
           })
         })
       }
-      dispatch(fetchBooksSuccess(books))
+      dispatch(actions.fetchBooksSuccess(books))
     } catch (e) {
       console.log(e)
     }
   }
 }
 
-export const fetchBookByKeyHandler = (key: string) => {
+export const fetchBookByKeyHandler = (key: string): ThunkType => {
   return async (dispatch: any) => {
-    dispatch(fetchBooksStart())
+    dispatch(actions.fetchBooksStart())
 
     try {
       const book = await booksAPI.getBook(key)
@@ -67,23 +60,23 @@ export const fetchBookByKeyHandler = (key: string) => {
         book.key = key
         dispatch(fetchAuthorByKeyHandler(book.author_id))
       }
-      dispatch(fetchBookSuccess(book))
+      dispatch(actions.fetchBookSuccess(book))
     } catch (e) {
       console.log(e)
     }
   }
 }
 
-export const addBookHandler = (book: Book) => {
+export const addBookHandler = (book: Book): ThunkType => {
   return async (dispatch: any) => {
-    dispatch(addBookInProgress())
+    dispatch(actions.addBookInProgress())
     const bookModify = {
       ...book,
       createt_at: Date.now()
     }
     try {
       await booksAPI.addBook(bookModify)
-      dispatch(addBookSucess())
+      dispatch(actions.addBookSucess())
       window.history.go(-1)
     } catch (e) {
       console.log(e)
@@ -91,13 +84,13 @@ export const addBookHandler = (book: Book) => {
   }
 }
 
-export const updateBookHandler = (data: UpdateBookType) => {
+export const updateBookHandler = (data: UpdateBookType): ThunkType => {
   const { key, title, year, author_id, image } = data
   return async (dispatch: any) => {
-    dispatch(updateInProgress())
+    dispatch(actions.updateInProgress())
     try {
       await booksAPI.updateBook(key, {title, year, author_id, image})
-      dispatch(updateBookSucess(data))
+      dispatch(actions.updateBookSucess(data))
       window.history.go(-1)
     } catch (e) {
       console.log(e)
@@ -105,12 +98,12 @@ export const updateBookHandler = (data: UpdateBookType) => {
   }
 }
 
-export const removeBookHandler = (key: string) => {
+export const removeBookHandler = (key: string): ThunkType => {
   return async (dispatch: any) => {
-    dispatch(removeInProgress(key))
+    dispatch(actions.removeInProgress(key))
     try {
       await booksAPI.removeBook(key)
-      dispatch(removeBookSuccess(key))
+      dispatch(actions.removeBookSuccess(key))
     } catch (e) {
       console.log(e)
     }
