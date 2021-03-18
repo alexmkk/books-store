@@ -4,9 +4,8 @@ import { addBookHandler } from '../../../store/actions/books'
 import { connect } from 'react-redux'
 import { fetchAuthorsHandler } from '../../../store/actions/authors'
 import { useHistory } from 'react-router'
-import { Author } from '../../../store/reducers/authors'
-import { Book } from '../../../store/reducers/books'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Author, Book } from '../../../types/types'
 
 type mapStatePropsType = {
   authors: Array<Author>

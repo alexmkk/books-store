@@ -1,7 +1,7 @@
-import { authorsAPI } from '../../api/api'
-import { Author } from '../reducers/authors'
 import { AppStateType, InferActionsTypes } from '../reducers/rootReducer'
 import { ThunkAction } from 'redux-thunk'
+import { Author } from '../../types/types'
+import { authorsAPI } from './../../api/authors-api'
 
 export const actions = {
   fetchAuthorsStart: () => ({ type: 'FETCH_AUTHORS_IN_PROGRESS' } as const),
@@ -14,10 +14,6 @@ export const actions = {
   removeAuthorSuccess: (key: string) => ({ type: 'REMOVE_AUTHOR_SUCCESS', key } as const),
   removeInProgress: (key: string) => ({ type: 'REMOVE_IN_PROGRESS_AUTHORS', key } as const)
 }
-
-
-export type ActionTypes = InferActionsTypes<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
 export const fetchAuthorsHandler = (): ThunkType => {
   return async (dispatch) => {
@@ -83,7 +79,7 @@ export const updateAuthorHandler = (data: Author): ThunkType => {
   return async (dispatch) => {
     dispatch(actions.updateInProgress())
     try {
-      await authorsAPI.updateAuthor(key, { first_name, last_name })
+      await authorsAPI.updateAuthor(key, { key, first_name, last_name })
       dispatch(actions.updateAuthorSucess(data))
       window.history.go(-1)
     } catch (e) {
@@ -103,3 +99,6 @@ export const removeAuthorHandler = (key: string): ThunkType => {
     }
   }
 }
+
+export type ActionTypes = InferActionsTypes<typeof actions>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>

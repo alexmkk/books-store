@@ -1,9 +1,8 @@
 import React from 'react'
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { connect } from 'react-redux';
-import { Book } from '../../../store/reducers/books';
-import { Author } from '../../../store/reducers/authors';
-import { AppStateType } from '../../../store/reducers/rootReducer';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form'
+import { connect } from 'react-redux'
+import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Book, Author } from '../../../types/types'
 
 type ownPropsType = {
   book: Book

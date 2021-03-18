@@ -3,8 +3,8 @@ import AddAuthorForm from './AddAuthorForm'
 import { addAuthorHandler } from '../../../store/actions/authors'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
-import { Author } from '../../../store/reducers/authors'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Author } from '../../../types/types'
 
 type mapStatePropsType = {
   addInProgress: boolean

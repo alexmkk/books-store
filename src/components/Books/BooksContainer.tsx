@@ -4,9 +4,9 @@ import Loader from '../Loader'
 import { connect } from 'react-redux'
 import { fetchBooksHandler, removeBookHandler } from '../../store/actions/books'
 import { NavLink } from 'react-router-dom'
-import { Book } from '../../store/reducers/books'
-import { Author } from '../../store/reducers/authors'
+
 import { AppStateType } from '../../store/reducers/rootReducer'
+import { Book, Author } from '../../types/types'
 
 type mapStatePropsType = {
   books: Array<Book>

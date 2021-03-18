@@ -5,9 +5,8 @@ import { useHistory, useParams } from 'react-router-dom'
 import EditBookForm from './EditBookForm'
 import Loader from '../../Loader'
 import { fetchAuthorsHandler } from '../../../store/actions/authors'
-import { Book } from '../../../store/reducers/books'
-import { Author } from '../../../store/reducers/authors'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Book, Author } from '../../../types/types'
 
 type mapStatePropsType = {
   book: Book
@@ -17,7 +16,7 @@ type mapStatePropsType = {
 }
 
 type mapDispatchPropsType = {
-  fetchBookByKey: (key: string) => void
+  fetchBookByKey: (key: string | '') => void
   updateBook: (data: Book) => void
   fetchAuthors: () => void
 }

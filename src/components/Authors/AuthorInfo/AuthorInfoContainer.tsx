@@ -2,11 +2,10 @@ import React, { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Loader from '../../Loader'
-
 import { fetchAuthorByKeyHandler } from '../../../store/actions/authors'
 import AuthorInfo from './AuthorInfo'
-import { Author } from '../../../store/reducers/authors'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Author } from '../../../types/types'
 
 type mapStatePropsType = {
   author: Author

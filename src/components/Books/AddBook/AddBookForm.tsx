@@ -1,7 +1,6 @@
 import React from 'react'
 import { Field, reduxForm, InjectedFormProps } from 'redux-form'
-import { Author } from '../../../store/reducers/authors'
-import { Book } from '../../../store/reducers/books'
+import { Author, Book } from '../../../types/types'
 
 type ownPropsType = {
   authors: Array<Author>

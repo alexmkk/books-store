@@ -4,8 +4,8 @@ import { fetchAuthorByKeyHandler, updateAuthorHandler } from '../../../store/act
 import { useHistory, useParams } from 'react-router-dom'
 import EditAuthorForm from './EditAuthorForm'
 import Loader from '../../Loader'
-import { Author } from '../../../store/reducers/authors'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Author } from '../../../types/types'
 
 type mapStatePropsType = {
   author: Author

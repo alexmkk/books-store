@@ -1,12 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Book } from '../../store/reducers/books'
-import { Author } from '../../store/reducers/authors'
+import { Book, Author } from '../../types/types'
+
 
 type ownPropsType = {
   books: Array<Book>
   authors: Array<Author>
-  onRemove: (key: string) => void
+  onRemove: (key: any) => void
   removeInProgress: Array<string>
 }
 
@@ -44,7 +44,7 @@ const Books: React.FC<ownPropsType> = ({ books, authors, onRemove, removeInProgr
                   onClick={() => onRemove(key)}
                   type="button"
                   className="btn btn-danger"
-                  disabled={removeInProgress.indexOf(key) !== -1}
+                  disabled={key ? removeInProgress.indexOf(key) !== -1 : false}
                 >Удалить</button>
               </td>
             </tr>

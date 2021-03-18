@@ -1,5 +1,5 @@
 import React from 'react'
-import { Author } from '../../../store/reducers/authors'
+import { Author } from '../../../types/types'
 
 type ownPropsType = {
   author: Author

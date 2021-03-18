@@ -1,8 +1,8 @@
 import React from 'react'
 import { Field, reduxForm, InjectedFormProps } from 'redux-form'
 import { connect } from 'react-redux'
-import { Author } from '../../../store/reducers/authors'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Author } from '../../../types/types'
 
 type ownPropsType = {
   author: Author | null

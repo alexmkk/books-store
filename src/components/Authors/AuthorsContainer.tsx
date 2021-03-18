@@ -4,8 +4,8 @@ import Loader from '../Loader'
 import { fetchAuthorsHandler, removeAuthorHandler } from '../../store/actions/authors'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { Author } from '../../store/reducers/authors'
 import { AppStateType } from '../../store/reducers/rootReducer'
+import { Author } from '../../types/types'
 
 type mapStatePropsType = {
   authors: Array<Author>

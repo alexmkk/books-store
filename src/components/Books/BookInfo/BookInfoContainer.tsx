@@ -4,9 +4,8 @@ import { fetchBookByKeyHandler } from '../../../store/actions/books'
 import { connect } from 'react-redux'
 import Loader from '../../Loader'
 import BookInfo from './BookInfo'
-import { Book } from '../../../store/reducers/books'
-import { Author } from '../../../store/reducers/authors'
 import { AppStateType } from '../../../store/reducers/rootReducer'
+import { Book, Author } from '../../../types/types'
 
 type mapStatePropsType = {
   book: Book

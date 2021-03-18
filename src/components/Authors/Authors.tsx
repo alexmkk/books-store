@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-import { Author } from '../../store/reducers/authors';
+import { Author } from '../../types/types';
 
 type PropsType = {
   authors: Array<Author>

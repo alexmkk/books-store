@@ -1,6 +1,6 @@
 import React from 'react'
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { Author } from '../../../store/reducers/authors';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form'
+import { Author } from '../../../types/types'
 
 type ownPropsType = {
   addInProgress: boolean

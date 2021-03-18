@@ -1,13 +1,5 @@
 import { ActionTypes } from "../actions/books"
-
-export type Book = {
-  key: string,
-  author_id: string,
-  createt_at: number,
-  image: string | '',
-  title: string,
-  year: number
-}
+import { Book } from "../../types/types"
 
 const initialState = {
   books: [] as Array<Book>,

@@ -1,10 +1,5 @@
 import { ActionTypes } from '../actions/authors'
-
-export type Author = {
-  key: string
-  first_name: string
-  last_name: string
-}
+import { Author } from '../../types/types'
 
 const initialState = {
   authors: [] as Array<Author>,

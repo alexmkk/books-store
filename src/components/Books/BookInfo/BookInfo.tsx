@@ -1,6 +1,5 @@
 import React from 'react'
-import { Book } from '../../../store/reducers/books'
-import { Author } from '../../../store/reducers/authors'
+import { Book, Author } from '../../../types/types'
 
 type ownPropsType = {
   book: Book
