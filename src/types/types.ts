@@ -1,11 +1,11 @@
 export type Author = {
-  key: string
+  readonly key: string
   first_name: string
   last_name: string
 }
 
 export type Book = {
-  key: string
+  readonly key: string
   author_id: string
   createt_at?: number
   image?: string

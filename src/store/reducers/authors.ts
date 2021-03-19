@@ -10,8 +10,6 @@ const initialState = {
   removeInProgress: [] as Array<string>
 }
 
-export type initialStateType = typeof initialState
-
 export default function authorsReducer(state = initialState, action: ActionTypes): initialStateType {
   switch (action.type) {
     case 'FETCH_AUTHORS_IN_PROGRESS':
@@ -73,3 +71,5 @@ export default function authorsReducer(state = initialState, action: ActionTypes
       return state
   }
 }
+
+export type initialStateType = typeof initialState
