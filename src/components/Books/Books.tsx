@@ -10,9 +10,17 @@ type ownPropsType = {
   removeInProgress: Array<string>
 }
 
-const Books: React.FC<ownPropsType> = ({ books, authors, onRemove, removeInProgress }) => {
+const Books: React.FC<ownPropsType> = ({books, authors, onRemove, removeInProgress}) => {
   return (
-    <>
+    <table className="table table-sm">
+      <tbody>
+        <tr>
+          <th>Название</th>
+          <th>Фамилия автора</th>
+          <th>Имя автора</th>
+          <th>Первая публикация</th>
+          <th colSpan={3}></th>
+        </tr>
       {
         books.map(book => {
           const { title, year, key } = book
@@ -51,7 +59,8 @@ const Books: React.FC<ownPropsType> = ({ books, authors, onRemove, removeInProgr
           )
         })
       }
-    </>
+      </tbody>
+    </table>
   )
 }
 

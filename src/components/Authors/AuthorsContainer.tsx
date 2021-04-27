@@ -1,6 +1,6 @@
 import React, { useEffect} from 'react'
 import Authors from './Authors'
-import Loader from '../Loader'
+import Loader from '../UI/Loader'
 import { fetchAuthorsHandler, removeAuthorHandler } from '../../store/actions/authors'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -20,7 +20,7 @@ type mapDispatchPropsType = {
 
 type PropsType = mapStatePropsType & mapDispatchPropsType
 
-const AuthorsContainer: React.FC<PropsType> = ({ authors, loading, fetchAuthors, removeAuthor, removeInProgress }) => {
+const AuthorsContainer: React.FC<PropsType> = ({authors, loading, fetchAuthors, removeAuthor, removeInProgress}) => {
   useEffect(() => {
     fetchAuthors()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,18 +36,9 @@ const AuthorsContainer: React.FC<PropsType> = ({ authors, loading, fetchAuthors,
       {loading
         ? <Loader />
         : authors.length > 0
-          ? <table className="table table-sm">
-            <tbody>
-              <tr>
-                <th>Фамилия</th>
-                <th colSpan={4}>Имя</th>
-              </tr>
-              <Authors authors={authors} onRemove={onRemove} removeInProgress={removeInProgress} />
-            </tbody>
-          </table>
+          ? <Authors authors={authors} onRemove={onRemove} removeInProgress={removeInProgress} />
           : <p>Авторы не найдены</p>
       }
-
       <NavLink to="/authors/add" exact className="nav-link">
         <button
           type="button"

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Loader from '../../Loader'
+import Loader from '../../UI/Loader'
 import { fetchAuthorByKeyHandler } from '../../../store/actions/authors'
 import AuthorInfo from './AuthorInfo'
 import { AppStateType } from '../../../store/reducers/rootReducer'

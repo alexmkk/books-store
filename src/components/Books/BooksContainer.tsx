@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Books from './Books'
-import Loader from '../Loader'
+import Loader from '../UI/Loader'
 import { connect } from 'react-redux'
 import { fetchBooksHandler, removeBookHandler } from '../../store/actions/books'
 import { NavLink } from 'react-router-dom'
@@ -37,22 +37,9 @@ const BooksContainer: React.FC<PropsType> = ({ loading, books, fetchBooks, remov
       {loading
         ? <Loader />
         : books.length > 0
-          ? <table className="table table-sm">
-            <tbody>
-              <tr>
-                <th>Название</th>
-                <th>Фамилия автора</th>
-                <th>Имя автора</th>
-                <th>Первая публикация</th>
-                <th colSpan={3}></th>
-              </tr>
-              <Books books={books} onRemove={onRemove} removeInProgress={removeInProgress} authors={authors} />
-            </tbody>
-          </table>
+          ? <Books books={books} onRemove={onRemove} removeInProgress={removeInProgress} authors={authors} />
           : <p>Книги не найдены</p>
-
       }
-
       <NavLink to="/books/add" exact className="nav-link">
         <button
           type="button"

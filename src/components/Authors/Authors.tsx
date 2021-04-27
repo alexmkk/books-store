@@ -10,7 +10,12 @@ type PropsType = {
 
 const Authors: React.FC<PropsType> = ({ authors, onRemove, removeInProgress }) => {
   return (
-    <>
+    <table className="table table-sm">
+      <tbody>
+        <tr>
+          <th>Фамилия</th>
+          <th colSpan={4}>Имя</th>
+        </tr>
       {
         authors.map((author) => {
           const { last_name, first_name, key } = author
@@ -18,12 +23,8 @@ const Authors: React.FC<PropsType> = ({ authors, onRemove, removeInProgress }) =
             <tr key={`${key}`}>
               <td>{last_name}</td>
               <td>{first_name}</td>
-              <td>
-                <NavLink to={`/authors/${key}`}>Смотреть</NavLink>
-              </td>
-              <td>
-                <NavLink to={`/authors/${key}/edit`}>Редактировать</NavLink>
-              </td>
+              <td><NavLink to={`/authors/${key}`}>Смотреть</NavLink></td>
+              <td><NavLink to={`/authors/${key}/edit`}>Редактировать</NavLink></td>
               <td>
                 <button
                   onClick={() => onRemove(key)}
@@ -36,7 +37,8 @@ const Authors: React.FC<PropsType> = ({ authors, onRemove, removeInProgress }) =
           )
         })
       }
-    </>
+      </tbody>
+    </table>
   )
 }
 

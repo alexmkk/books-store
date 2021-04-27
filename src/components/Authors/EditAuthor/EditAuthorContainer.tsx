@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchAuthorByKeyHandler, updateAuthorHandler } from '../../../store/actions/authors'
 import { useHistory, useParams } from 'react-router-dom'
 import EditAuthorForm from './EditAuthorForm'
-import Loader from '../../Loader'
+import Loader from '../../UI/Loader'
 import { AppStateType } from '../../../store/reducers/rootReducer'
 import { Author } from '../../../types/types'
 
