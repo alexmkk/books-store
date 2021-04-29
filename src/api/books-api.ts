@@ -3,8 +3,10 @@ import instanse from './api'
 import { Book } from '../types/types'
 
 export const booksAPI = {
-  getBooks() {
-    return instanse.get('/books.json')
+  getBooks(authorKey?: string) {
+    const filter = authorKey ? `?orderBy="author_id"&equalTo="${authorKey}"` : ""
+    
+    return instanse.get('/books.json' + filter)
         .then(response => response.data)
   },
   getBook(key: string) {

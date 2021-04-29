@@ -49,6 +49,7 @@ const AddBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsType
           name="author_id"
           id="author_id"
           component="select"
+          className="form-control"
           required
         >
           <option value=''>Выберите автора</option>
@@ -56,6 +57,15 @@ const AddBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsType
             return <option key={author.key} value={author.key}>{author.last_name} {author.first_name}</option>
           })}
         </Field>
+      </div>
+      <div className="mb-3">
+        <label htmlFor="text" className="form-label">Описание</label>
+        <Field
+          name="description"
+          id="description"
+          component="textarea"
+          className="form-control"
+        />
       </div>
       <button
         type="submit"

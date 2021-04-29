@@ -10,5 +10,6 @@ export type Book = {
   createt_at?: number
   image?: string
   title: string
-  year: number
+  year: number,
+  description?: string
 }

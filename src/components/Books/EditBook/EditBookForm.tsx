@@ -52,6 +52,7 @@ const EditBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsTyp
           name="author_id"
           id="author_id"
           component="select"
+          className="form-control"
           required
         >
           {authors.map(author => {
@@ -61,6 +62,16 @@ const EditBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsTyp
             >{author.last_name} {author.first_name}</option>
           })}
         </Field>
+      </div>
+      <div className="mb-3">
+        <label htmlFor="description" className="form-label">Описание</label>
+        <Field
+          name="description"
+          id="description"
+          component="textarea"
+          className="form-control"
+          rows="7"
+        />
       </div>
       <Field
         component="input"
@@ -85,6 +96,7 @@ export default connect((state: AppStateType) => ({
     year: state.book.book.year,
     author_id: state.book.book.author_id,
     image: state.book.book.image,
-    key: state.book.book.key
+    key: state.book.book.key,
+    description: state.book.book.description
   }
 }))(reduxForm<Book, ownPropsType>({ form: 'editBook' })(EditBookForm))

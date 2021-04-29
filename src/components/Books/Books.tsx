@@ -12,6 +12,7 @@ type ownPropsType = {
 
 const Books: React.FC<ownPropsType> = ({books, authors, onRemove, removeInProgress}) => {
   return (
+    <>
     <table className="table table-sm">
       <tbody>
         <tr>
@@ -61,6 +62,8 @@ const Books: React.FC<ownPropsType> = ({books, authors, onRemove, removeInProgre
       }
       </tbody>
     </table>
+    <p className="fs-6 text-secondary ml-1">Всего книг: {books.length}</p>
+    </>
   )
 }
 

@@ -16,7 +16,7 @@ export default function booksReducer(state = initialState, action: ActionTypes):
   switch (action.type) {
     case 'FETCH_BOOKS_IN_PROGRESS':
       return {
-        ...state, loading: true
+        ...state, books: [], loading: true
       }
     case 'FETCH_BOOKS_SUCCESS':
       return {

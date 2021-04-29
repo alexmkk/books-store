@@ -2,7 +2,7 @@ import { fetchAuthorByKeyHandler, fetchAuthorsHandler } from './authors'
 import { ThunkAction } from 'redux-thunk'
 import { InferActionsTypes, AppStateType } from '../reducers/rootReducer'
 import { Book } from '../../types/types'
-import { booksAPI } from './../../api/books-api';
+import { booksAPI } from './../../api/books-api'
 
 export const actions = {
   fetchBooksSuccess: (books: Array<Book>) => ({ type: 'FETCH_BOOKS_SUCCESS', books } as const),
@@ -16,12 +16,13 @@ export const actions = {
   removeInProgress: (key: string) => ({ type: 'REMOVE_IN_PROGRESS', key } as const)
 }
 
-export const fetchBooksHandler = (): ThunkType => {
+export const fetchBooksHandler = (authorKey?: string): ThunkType => {
   return async dispatch => {
-    dispatch(fetchAuthorsHandler())
+    if (!authorKey) dispatch(fetchAuthorsHandler())
     dispatch(actions.fetchBooksStart())
+    
     try {
-      const data = await booksAPI.getBooks()
+      const data = await booksAPI.getBooks(authorKey)
       const books: Array<Book> = []
 
       if (data !== null) {
@@ -74,11 +75,11 @@ export const addBookHandler = (book: Book): ThunkType => {
 }
 
 export const updateBookHandler = (data: Book): ThunkType => {
-  const { key, title, year, author_id, image } = data
+  const { key, title, year, author_id, image, description } = data
   return async dispatch => {
     dispatch(actions.updateInProgress())
     try {
-      await booksAPI.updateBook(key, {key, title, year, author_id, image})
+      await booksAPI.updateBook(key, {key, title, year, author_id, image, description})
       dispatch(actions.updateBookSucess(data))
       window.history.go(-1)
     } catch (e) {
