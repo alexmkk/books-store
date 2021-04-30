@@ -7,6 +7,7 @@ import { booksAPI } from './../../api/books-api'
 export const actions = {
   fetchBooksSuccess: (books: Array<Book>) => ({ type: 'FETCH_BOOKS_SUCCESS', books } as const),
   fetchBooksStart: () => ({ type: 'FETCH_BOOKS_IN_PROGRESS' } as const),
+  fetchBookStart: () => ({type: 'FETCH_BOOK_IN_PROGRESS'} as const),
   fetchBookSuccess: (book: Book) => ({ type: 'FETCH_BOOK_SUCCESS', book } as const),
   updateInProgress: () => ({ type: 'UPDATE_BOOK_IN_PROGRESS' } as const),
   updateBookSucess: (data: Book) => ({ type: 'UPDATE_BOOK_SUCCESS', data } as const),
@@ -19,6 +20,7 @@ export const actions = {
 export const fetchBooksHandler = (authorKey?: string): ThunkType => {
   return async dispatch => {
     if (!authorKey) dispatch(fetchAuthorsHandler())
+    
     dispatch(actions.fetchBooksStart())
     
     try {
@@ -42,7 +44,7 @@ export const fetchBooksHandler = (authorKey?: string): ThunkType => {
 
 export const fetchBookByKeyHandler = (key: string): ThunkType => {
   return async dispatch => {
-    dispatch(actions.fetchBooksStart())
+    dispatch(actions.fetchBookStart())
 
     try {
       const book = await booksAPI.getBook(key)
@@ -58,19 +60,20 @@ export const fetchBookByKeyHandler = (key: string): ThunkType => {
 }
 
 export const addBookHandler = (book: Book): ThunkType => {
+  console.log(book)
   return async dispatch => {
-    dispatch(actions.addBookInProgress())
-    const bookModify = {
-      ...book,
-      createt_at: Date.now()
-    }
-    try {
-      await booksAPI.addBook(bookModify)
-      dispatch(actions.addBookSucess())
-      window.history.go(-1)
-    } catch (e) {
-      console.log(e)
-    }
+    // dispatch(actions.addBookInProgress())
+    // const bookModify = {
+    //   ...book,
+    //   createt_at: Date.now()
+    // }
+    // try {
+    //   await booksAPI.addBook(bookModify)
+    //   dispatch(actions.addBookSucess())
+    //   window.history.go(-1)
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }
 }
 

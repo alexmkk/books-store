@@ -1,19 +1,21 @@
 import React from 'react'
 import { Author, Book } from '../../../types/types'
 import Loader from '../../UI/Loader'
-import { NavLink } from 'react-router-dom';
 
 type ownPropsType = {
   author: Author,
   books: Array<Book>,
-  history: any
+  history: any,
+  loadingBooks: boolean
 }
 
-const AuthorInfo: React.FC<ownPropsType> = ({ author, history, books }) => {
+const AuthorInfo: React.FC<ownPropsType> = ({ author, history, books, loadingBooks }) => {
+  
+  if (loadingBooks) return <Loader />
   return (
     <div>
       <h1>{author.last_name} {author.first_name} <button className='btn btn-secondary' onClick={() => history.push('/authors')}>Назад</button></h1>
-      {books.length === 0 ? <Loader/> : null}
+      {books.length === 0 ? "Книги не найдены" : null}
       <div className="d-flex justify-content-left flex-wrap pt-3">
         {
           books.map(book => {

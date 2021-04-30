@@ -54,7 +54,7 @@ const AddBookForm: React.FC<InjectedFormProps<Book, ownPropsType> & ownPropsType
         >
           <option value=''>Выберите автора</option>
           {authors.map(author => {
-            return <option key={author.key} value={author.key}>{author.last_name} {author.first_name}</option>
+            return <option key={author.key} value={`${author.key}`}>{author.last_name} {author.first_name}</option>
           })}
         </Field>
       </div>

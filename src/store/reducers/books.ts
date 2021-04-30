@@ -5,6 +5,7 @@ const initialState = {
   books: [] as Array<Book>,
   loading: false,
   book: {} as Book,
+  searchTitle: 's' as string,
   addInProgress: false,
   updateInProgress: false,
   removeInProgress: [] as Array<string>
@@ -16,11 +17,15 @@ export default function booksReducer(state = initialState, action: ActionTypes):
   switch (action.type) {
     case 'FETCH_BOOKS_IN_PROGRESS':
       return {
-        ...state, books: [], loading: true
+        ...state, loading: true, books: []
       }
     case 'FETCH_BOOKS_SUCCESS':
       return {
         ...state, loading: false, books: action.books
+      }
+    case 'FETCH_BOOK_IN_PROGRESS':
+      return {
+        ...state, loading: true
       }
     case 'FETCH_BOOK_SUCCESS':
       return {

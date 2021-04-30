@@ -8,11 +8,6 @@ type ownPropsType = {
 }
 
 const BookInfo: React.FC<ownPropsType> = ({ book, author, history }) => {
-  let first_name = '', last_name = ''
-  if (author && Object.keys(author).length !== 0) {
-    first_name = author.first_name
-    last_name = author.last_name
-  }
   return (
     <div className="row">
     <div className="col-4">
@@ -25,7 +20,13 @@ const BookInfo: React.FC<ownPropsType> = ({ book, author, history }) => {
         />
         <div className="card-body">
           <h2 className="card-title">{book.title}</h2>
-          <h5>{`${first_name} ${last_name}`}</h5>
+          <h5>
+          {
+            author?.first_name
+              ? `${author.first_name} ${author.last_name}`
+              : <div className="spinner-border spinner-border-sm" role="status"></div>
+          }
+          </h5>
           <p className="card-text">{book.year}</p>
         </div>
         <button className='btn btn-secondary' onClick={() => history.goBack()}>Назад</button>

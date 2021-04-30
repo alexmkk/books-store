@@ -6,6 +6,7 @@ import { authorsAPI } from './../../api/authors-api'
 export const actions = {
   fetchAuthorsStart: () => ({ type: 'FETCH_AUTHORS_IN_PROGRESS' } as const),
   fetchAuthorsSuccess: (authors: Array<Author>) => ({ type: 'FETCH_AUTHORS_SUCCESS', authors } as const),
+  fetchAuthorStart: () => ({type: 'FETCH_AUTHOR_IN_PROGRESS'} as const),
   fetchAuthorSuccess: (author: Author) => ({ type: 'FETCH_AUTHOR_SUCCESS', author } as const),
   updateInProgress: () => ({ type: 'UPDATE_AUTHOR_IN_PROGRESS' } as const),
   updateAuthorSucess: (data: Author) => ({ type: 'UPDATE_AUTHOR_SUCCESS', data } as const),
@@ -45,7 +46,7 @@ export const fetchAuthorsHandler = (): ThunkType => {
 
 export const fetchAuthorByKeyHandler = (key: string): ThunkType => {
   return async (dispatch) => {
-    dispatch(actions.fetchAuthorsStart())
+    dispatch(actions.fetchAuthorStart())
     
     try {
       const author = await authorsAPI.getAuthor(key)

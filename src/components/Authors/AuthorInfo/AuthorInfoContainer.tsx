@@ -11,6 +11,7 @@ import { fetchBooksHandler } from '../../../store/actions/books'
 type mapStatePropsType = {
   author: Author
   loading: boolean,
+  loadingBooks: boolean,
   books: Array<Book>
 }
 
@@ -21,7 +22,7 @@ type mapDispatchPropsType = {
 
 type PropsType = mapStatePropsType & mapDispatchPropsType
 
-const AuthorInfoContainer:React.FC<PropsType> = ({ author, loading, fetchAuthorByKey, fetchBooks, books }) => {
+const AuthorInfoContainer:React.FC<PropsType> = ({ author, loading, loadingBooks, fetchAuthorByKey, fetchBooks, books }) => {
   type ParamTypes = {
     key: string
   }
@@ -30,23 +31,19 @@ const AuthorInfoContainer:React.FC<PropsType> = ({ author, loading, fetchAuthorB
         history = useHistory<any>()
 
   useEffect(() => {
-    fetchAuthorByKey(key)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    if (author.key) {
-      fetchBooks(author.key)
+    if (key !== author.key) {
+      fetchBooks(key)
+      fetchAuthorByKey(key)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [author.key])
+  }, [])
 
   return (
     <>
       {loading
         ? <Loader />
         : author
-          ? <AuthorInfo author={author} history={history} books={books}/>
+          ? <AuthorInfo author={author} history={history} books={books} loadingBooks={loadingBooks} />
           : <p className="text-center">Автор не найден</p>
       }
     </>
@@ -56,6 +53,7 @@ const AuthorInfoContainer:React.FC<PropsType> = ({ author, loading, fetchAuthorB
 const mapStateToProps = (state: AppStateType): mapStatePropsType => ({
   author: state.author.author,
   loading: state.author.loading,
+  loadingBooks: state.book.loading,
   books: state.book.books
 })
 

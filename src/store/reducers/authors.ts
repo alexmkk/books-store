@@ -14,11 +14,15 @@ export default function authorsReducer(state = initialState, action: ActionTypes
   switch (action.type) {
     case 'FETCH_AUTHORS_IN_PROGRESS':
       return {
-        ...state, author: {key: '', last_name: '', first_name: ''}, loading: true
+        ...state, loading: true
       }
     case 'FETCH_AUTHORS_SUCCESS':
       return {
         ...state, loading: false, authors: action.authors
+      }
+    case 'FETCH_AUTHOR_IN_PROGRESS':
+      return {
+        ...state, loading: true, author: {key: '', last_name: '', first_name: ''}
       }
     case 'FETCH_AUTHOR_SUCCESS':
       return {

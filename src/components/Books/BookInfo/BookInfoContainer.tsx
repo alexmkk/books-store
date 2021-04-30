@@ -28,10 +28,10 @@ const BookInfoContainer: React.FC<PropsType> = ({ book, author, loading, fetchBo
         history = useHistory<any>()
   
   useEffect(() => {
-    fetchBookByKey(key)
+    if (book.key !== key) fetchBookByKey(key)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  
   return (
     <>
       {loading

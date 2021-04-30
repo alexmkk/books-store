@@ -7,12 +7,14 @@ import { NavLink } from 'react-router-dom'
 
 import { AppStateType } from '../../store/reducers/rootReducer'
 import { Book, Author } from '../../types/types'
+import Search from '../UI/Search/Search'
 
 type mapStatePropsType = {
   books: Array<Book>
   authors: Array<Author>
   loading: boolean
-  removeInProgress: Array<string>
+  removeInProgress: Array<string>,
+  searchTitle: string
 }
 
 type mapDispatchPropsType = {
@@ -22,7 +24,7 @@ type mapDispatchPropsType = {
 
 type PropsType = mapStatePropsType & mapDispatchPropsType
 
-const BooksContainer: React.FC<PropsType> = ({ loading, books, fetchBooks, removeBook, removeInProgress, authors }) => {
+const BooksContainer: React.FC<PropsType> = ({ loading, books, fetchBooks, removeBook, removeInProgress, authors, searchTitle }) => {
   useEffect(() => {
     fetchBooks()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,10 +36,11 @@ const BooksContainer: React.FC<PropsType> = ({ loading, books, fetchBooks, remov
   return (
     <>
       <h1>Книги</h1>
+      <Search fetchBooks={fetchBooks}/>
       {loading
         ? <Loader />
         : books.length > 0
-          ? <Books books={books} onRemove={onRemove} removeInProgress={removeInProgress} authors={authors} />
+          ? <Books books={books} onRemove={onRemove} removeInProgress={removeInProgress} authors={authors}/>
           : <p>Книги не найдены</p>
       }
       <NavLink to="/books/add" exact className="nav-link">
@@ -53,6 +56,7 @@ const BooksContainer: React.FC<PropsType> = ({ loading, books, fetchBooks, remov
 const mapStateToProps = (state: AppStateType): mapStatePropsType => ({
   books: state.book.books,
   authors: state.author.authors,
+  searchTitle: state.book.searchTitle,
   loading: state.book.loading,
   removeInProgress: state.book.removeInProgress
 })
